@@ -3,6 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const usuarioController = require('./controllers/usuarioController');
 const authController = require('./controllers/authController');
+const categoriaController = require('./controllers/categoriaController');
 
 
 // Crear un usuarios
@@ -27,6 +28,16 @@ router.post('/auth/', [
     check('password','El password es obligatorio.').not().isEmpty()
 ],
 authController.login
+);
+
+router.post('/admin/agregarcategorias',[
+    check('nombre', 'El nombre es obligatorio').not().isEmpty()
+],
+categoriaController.crearCategoria
+);
+
+router.get('/admin/listarcategorias',
+    categoriaController.listarCategoria
 );
 
 module.exports = router ;
