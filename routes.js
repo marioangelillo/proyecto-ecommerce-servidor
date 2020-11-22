@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const usuarioController = require('./controllers/usuarioController');
 const authController = require('./controllers/authController');
 const categoriaController = require('./controllers/categoriaController');
+const productController = require('./controllers/productController');
 
 
 // Crear un usuarios
@@ -39,5 +40,25 @@ categoriaController.crearCategoria
 router.get('/admin/listarcategorias',
     categoriaController.listarCategoria
 );
+
+router.delete('/admin/eliminarcategorias/:id',
+categoriaController.eliminarCategoria
+);
+
+router.post('/admin/agregarproductos',[
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('precio', 'El precio es obligatorio').not().isEmpty(),
+    check('stock', 'El stock es obligatorio').not().isEmpty(),
+    check('categoria', 'La categoria no es valida').isMongoId(),
+    check('descripcion', 'La descripcion es obligatoria').not().isEmpty()
+],
+productController.crearProducto
+);
+
+router.get('/admin/listarproductos',
+    productController.listarProductos
+);
+
+
 
 module.exports = router ;
