@@ -41,6 +41,13 @@ router.get('/admin/listarcategorias',
     categoriaController.listarCategoria
 );
 
+router.put('/admin/modificarcategorias/:id',
+[
+check ('nombre','El nombre es obligatorio.').notEmpty()
+],
+categoriaController.modificarCategoria
+);
+
 router.delete('/admin/eliminarcategorias/:id',
 categoriaController.eliminarCategoria
 );
@@ -55,8 +62,26 @@ router.post('/admin/agregarproductos',[
 productController.crearProducto
 );
 
+// Actualizar Tareas
+// api/tareas/:id
+router.put('/admin/modificarproductos/:id',
+[
+check ('nombre','El nombre es obligatorio.').notEmpty(),
+check ('precio','El campo precio es obligatorio.').notEmpty(),
+check ('stock','El campo stock es obligatorio.').notEmpty(),
+check ('descripcion','El campo descripcion es obligatorio.').notEmpty(),
+check ('categoria','El campo categoria es obligatorio.').notEmpty(),
+check ('categoria','La categoria no es válida.').isMongoId()
+],
+productController.modificarProducto
+);
+
 router.get('/admin/listarproductos',
     productController.listarProductos
+);
+
+router.delete('/admin/eliminarproductos/:id',
+    productController.eliminarProducto
 );
 
 

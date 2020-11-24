@@ -44,3 +44,4 @@ exports.crearUsuario = async ( req , res ) => {
         res.status(400).json({msg: 'Hubo un error'});
     }
 };
+
