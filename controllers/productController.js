@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Producto = require('../models/Producto');
 const Categoria = require('../models/Categoria');
 const {validationResult} = require('express-validator');
+var mercadopago = require('mercadopago');
 
 exports.crearProducto = async (req, res) =>{
 
@@ -57,7 +58,7 @@ exports.eliminarProducto = async (req, res) => {
         //Verificar que la tarea exista
         let producto = await Producto.findById(req.params.id);
         if(!producto){
-            return res.status(400).json({msg: 'La producto no existe'});
+            return res.status(400).json({msg: 'El producto no existe'});
         }
 
         await producto.remove();
@@ -97,6 +98,27 @@ exports.modificarProducto = async (req, res) =>{
         // Modificar producto
         producto = await Producto.findByIdAndUpdate(req.params.id,req.body, {new:true} );
         res.json({msg : ' Producto actualizado correctamente. ', producto }) ;
+
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({msg: 'Hubo un error'});
+    }
+}
+
+exports.buscarProducto = async (req, res) => {
+
+    try {
+        
+        if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+            return res.status(400).json({msg: 'El producto no existe'})
+        }
+
+        //Verificar que la tarea exista
+        let producto = await Producto.findById(req.params.id);
+        if(!producto){
+            return res.status(400).json({msg: 'El producto no existe'});
+        }        
+        return res.json(producto);
 
     } catch (error) {
         console.error(error);

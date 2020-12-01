@@ -5,6 +5,7 @@ const usuarioController = require('./controllers/usuarioController');
 const authController = require('./controllers/authController');
 const categoriaController = require('./controllers/categoriaController');
 const productController = require('./controllers/productController');
+const mercadoPagoController = require('./controllers/mercadoPagoController');
 
 
 // Crear un usuarios
@@ -80,10 +81,16 @@ router.get('/admin/listarproductos',
     productController.listarProductos
 );
 
+router.get('/productos/:id',
+    productController.buscarProducto
+);
+
 router.delete('/admin/eliminarproductos/:id',
     productController.eliminarProducto
 );
 
-
+/*router.post('/mercadopago',
+    productController.mercadopago
+)*/
 
 module.exports = router ;
